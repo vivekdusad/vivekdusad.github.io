@@ -1,0 +1,42 @@
+import "./about.css";
+import Award from "../../img/award.png";
+import Me from "../../img/me.png";
+
+export const About = () => {
+  return (
+    <div className="a">
+      <div className="a-left">
+        <div className="a-card bg"></div>
+        <div className="a-card">
+          <img
+            src={Me}
+            alt=""
+            className="a-img"
+          />
+        </div>
+      </div>
+      <div className="a-right">
+        <h1 className="a-title">About Me</h1>
+        <p className="a-sub">
+          Hey There! My name is Vivek Khandelwal, Founder of @flutter.stack and Third year Student at Nit Hamirpur
+          Now these I am spending my days by building my own startup and learning some new technology
+        </p>
+        <p className="a-desc">
+          As a Developer,I try to make systems which are scalable and good looking. I have spent my 2 years of collage in learning 
+          Android Development and Cross Platform Technologies(Flutter), During this time i have built many great projects
+        </p>
+        <div className="a-award">
+          <img src={Award} alt="" className="a-award-img" />
+          <div className="a-award-texts">
+            <h4 className="a-award-title">Flutter Stack</h4>
+            <p className="a-award-desc">
+              where i am posting tips and tutorial about flutter
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+<About></About>
