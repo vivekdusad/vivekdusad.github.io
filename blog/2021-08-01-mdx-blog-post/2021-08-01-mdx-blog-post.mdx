@@ -11,7 +11,7 @@ Caching of GET Requests which are less-frequently modified in database has been
 a best practice for user experience. This leads to less consumption
 of network bandwidth and leads to a greater user experience.
 
-For achieving this we are going to use a basic concept of Http protocol. **Etag**
+For achieving this we are going to use a basic concept of http protocol, **Etag**
 
 ## Etag
 
@@ -27,14 +27,14 @@ Future<Response> fetch(String etag) async {
   }
 ```
 
-**fetch** function will throw error with status code **304** if data is not modified in database or give response if data is modified with status code **200**
+**fetch** function will throw error with status code **304** if data is not modified in database or give response if data is modified with status code **200**.
 
 ## Procedure
 
 1. Make First Request to server.
 2. Store Etag and Response to Local Database.
 3. Further Requests will be made through stored etag(demonstrated above in code).
-4. If data is not modified then Exception will be thrown with status code 304 then we give data to UI layer from local database.
+4. If data is not modified, then exception will be thrown with status code 304. Then we give data to UI layer from local database.
 5. If Requests ends with status code 200 then we will give this new data to UI layer.
 
 
