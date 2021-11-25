@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvivekkhandelwal=self.webpackChunkvivekkhandelwal||[]).push([[2864],{5410:function(t){t.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/flutter-tutorials","name":"flutter-tutorials","count":1,"permalink":"/blog/tags/flutter-tutorials"}')}}]);

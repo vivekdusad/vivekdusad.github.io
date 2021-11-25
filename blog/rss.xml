@@ -16,13 +16,48 @@
             <content:encoded><![CDATA[<p><a href="https://docusaurus.io/docs/blog">Docusaurus blogging features</a> are powered by the <a href="https://docusaurus.io/docs/api/plugins/@docusaurus/plugin-content-blog">blog plugin</a>.</p><p>Simply add Markdown files (or folders) to the <code>blog</code> directory.</p><p>Regular blog authors can be added to <code>authors.yml</code>.</p><p>The blog post date can be extracted from filenames, such as:</p><ul><li><code>2019-05-30-welcome.md</code></li><li><code>2019-05-30-welcome/index.md</code></li></ul><p>A blog post folder can be convenient to co-locate blog post images:</p><p><img src="./docusaurus-plushie-banner.jpeg" alt="Docusaurus Plushie"/></p><p>The blog supports tags as well!</p><p><strong>And if you don&#x27;t want a blog</strong>: just delete this directory, and use <code>blog: false</code> in your Docusaurus config.</p>]]></content:encoded>
         </item>
         <item>
-            <title><![CDATA[MDX Blog Post]]></title>
-            <link>https://vivekdusad.github.io/blog/mdx-blog-post</link>
-            <guid>mdx-blog-post</guid>
+            <title><![CDATA[Cache Your Response The Right Way in Flutter]]></title>
+            <link>https://vivekdusad.github.io/blog/cache-response-in-flutter</link>
+            <guid>cache-response-in-flutter</guid>
             <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
-            <description><![CDATA[Blog posts support Docusaurus Markdown features, such as MDX.]]></description>
-            <content:encoded><![CDATA[<p>Blog posts support <a href="https://docusaurus.io/docs/markdown-features">Docusaurus Markdown features</a>, such as <a href="https://mdxjs.com/">MDX</a>.</p><p>:::tip</p><p>Use the power of React to create interactive blog posts.</p><pre><code class="language-js">&lt;button onClick={() =&gt; alert(&#x27;button clicked!&#x27;)}&gt;Click me!&lt;/button&gt;
-</code></pre><button>Click me!</button><p>:::</p>]]></content:encoded>
+            <description><![CDATA[banner]]></description>
+            <content:encoded><![CDATA[<p><img src="./banner.jpg" alt="banner"/></p><p>Caching of GET Requests which are less-freqently modified has been
+a best pratice for user expirence, this leads to less consumption
+of network bandwidth and leads to great user expirence.</p><p>For Achieving this we are going to use basic concept of Http protocol <strong>Etag</strong>.</p><h2>Etag</h2><p>An ETag (entity tag) is an HTTP response header returned by an HTTP/1.1 compliant web server used to determine change in content at a given URL.</p><p>We can use Etag for caching purpose</p><pre><code class="language-dart" metastring="title=&quot;main.dart&quot;" title="&quot;main.dart&quot;">Future&lt;Response&gt; fetch(String etag) async {
+    Response response = await _dio.get(Urls.appBannersEndpoint,
+        options: Options(headers: {&quot;If-None-Match&quot;: etag}));
+    return response;
+  }
+</code></pre><p><strong>fetch</strong> function will throw error with status code 304 if data is not modified in database or give response if data is modified with status code <strong>200</strong></p><h2>Procedure-&gt;</h2><ol><li>Make First Request to server</li><li>Store Etag and Response to Local Database</li><li>Further Requests will be made through stored etag(demonstrated above in code)</li><li>If data is not modified then Exception will be thrown with status code 304 then we give data to ui layer from local database</li><li>If Requests ends with status code 200 then we will give this new data to ui layer.</li></ol><pre><code class="language-dart" metastring="title=&quot;repositry.dart&quot;" title="&quot;repositry.dart&quot;">Stream&lt;List&lt;Banners&gt;&gt; fetch() async* {
+    var data;
+    CacherDto? cachedData;
+    //getting etag from local database
+    try {
+      cachedData = await responseCacher.readData(Urls.appBannersEndpoint);
+    } catch (e) {
+      print(e);
+      cachedData = null;
+    }
+    try {
+        //making requests to server
+      Response response = (await service.fetch(cachedData?.etag ?? &quot;&quot;));
+      await responseCacher.saveData(
+          CacherDto(response.headers[&#x27;etag&#x27;]![0], response.data),
+          Urls.appBannersEndpoint);
+      data = response.data;
+    } on DioError catch (_) {
+        //if error occured then data will be set from 
+        //local database
+      data = cachedData?.data;
+    } catch (e) {
+      //! Add To Firebase
+      throw &quot;Failed! Try Again Later&quot;;
+    }
+    if (data != null) {
+      yield (data as List).map((e) =&gt; Banners.fromJson(e)).toList();
+    }
+  }
+</code></pre>]]></content:encoded>
         </item>
         <item>
             <title><![CDATA[Long Blog Post]]></title>

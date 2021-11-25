@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkvivekkhandelwal=self.webpackChunkvivekkhandelwal||[]).push([[5244],{9877:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","slug":"/blog/tags/cache","name":"cache","count":1,"permalink":"/blog/tags/cache"}')}}]);
