@@ -13,10 +13,10 @@ const config = {
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'vivekkhandelwal', // Usually your GitHub org/user name.
+  organizationName: 'vivekdusad', // Usually your GitHub org/user name.
   projectName: 'vivekdusad.github.io',
-  trailingSlash: false, // Usually your repo name.
-
+  trailingSlash: false,
+  deploymentBranch:'master', // Usually your repo name.
   presets: [
     [
       '@docusaurus/preset-classic',
@@ -117,6 +117,7 @@ const config = {
       },
       prism: {
         theme: lightCodeTheme,
+        additionalLanguages: ['dart'],
         darkTheme: darkCodeTheme,
       },
     }),
