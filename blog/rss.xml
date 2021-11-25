@@ -21,14 +21,14 @@
             <guid>cache-response-in-flutter</guid>
             <pubDate>Sun, 01 Aug 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[banner]]></description>
-            <content:encoded><![CDATA[<p><img src="./banner.jpg" alt="banner"/></p><p>Caching of GET Requests which are less-freqently modified has been
-a best pratice for user expirence, this leads to less consumption
-of network bandwidth and leads to great user expirence.</p><p>For Achieving this we are going to use basic concept of Http protocol <strong>Etag</strong>.</p><h2>Etag</h2><p>An ETag (entity tag) is an HTTP response header returned by an HTTP/1.1 compliant web server used to determine change in content at a given URL.</p><p>We can use Etag for caching purpose</p><pre><code class="language-dart" metastring="title=&quot;main.dart&quot;" title="&quot;main.dart&quot;">Future&lt;Response&gt; fetch(String etag) async {
+            <content:encoded><![CDATA[<p><img src="./banner.jpg" alt="banner"/></p><p>Caching of GET Requests which are less-frequently modified in database has been
+a best practice for user experience. This leads to less consumption
+of network bandwidth and leads to a greater user experience.</p><p>For achieving this we are going to use a basic concept of http protocol, <strong>Etag</strong></p><h2>Etag</h2><p>An ETag (entity tag) is an HTTP response header returned by an HTTP/1.1 compliant web server used to determine change in content at a given URL.</p><p>We can use Etag for caching purposes</p><pre><code class="language-dart" metastring="title=&quot;main.dart&quot;" title="&quot;main.dart&quot;">Future&lt;Response&gt; fetch(String etag) async {
     Response response = await _dio.get(Urls.appBannersEndpoint,
         options: Options(headers: {&quot;If-None-Match&quot;: etag}));
     return response;
   }
-</code></pre><p><strong>fetch</strong> function will throw error with status code 304 if data is not modified in database or give response if data is modified with status code <strong>200</strong></p><h2>Procedure-&gt;</h2><ol><li>Make First Request to server</li><li>Store Etag and Response to Local Database</li><li>Further Requests will be made through stored etag(demonstrated above in code)</li><li>If data is not modified then Exception will be thrown with status code 304 then we give data to ui layer from local database</li><li>If Requests ends with status code 200 then we will give this new data to ui layer.</li></ol><pre><code class="language-dart" metastring="title=&quot;repositry.dart&quot;" title="&quot;repositry.dart&quot;">Stream&lt;List&lt;Banners&gt;&gt; fetch() async* {
+</code></pre><p><strong>fetch</strong> function will throw error with status code <strong>304</strong> if data is not modified in database or give response if data is modified with status code <strong>200</strong>.</p><h2>Procedure</h2><ol><li>Make First Request to server.</li><li>Store Etag and Response to Local Database.</li><li>Further Requests will be made through stored etag(demonstrated above in code).</li><li>If data is not modified, then exception will be thrown with status code 304. Then we give data to UI layer from local database.</li><li>If Requests ends with status code 200 then we will give this new data to UI layer.</li></ol><pre><code class="language-dart" metastring="title=&quot;repository.dart&quot;" title="&quot;repository.dart&quot;">Stream&lt;List&lt;Banners&gt;&gt; fetch() async* {
     var data;
     CacherDto? cachedData;
     //getting etag from local database
